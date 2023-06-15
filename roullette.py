@@ -1,5 +1,5 @@
 import random
-
+from time import sleep
 roulette_numbers = {
     0: {'value': 0, 'color': 'green'},
     32: {'value': 32, 'color': 'red'},
@@ -48,6 +48,13 @@ def spinner():
 
 
 def serie_apolo():
+    print("####<-**°°° RULETA °°°**->####")
+    sleep(1)
+    print()
+    print("Bienvenid@ a la ruleta de python!")
+    
+    sleep(1)
+    print("Completa los siguientes datos y presiona enter:")
     round_color = 0
     red_count = 0
     black_count = 0
@@ -60,25 +67,21 @@ def serie_apolo():
     
     # datos para la serie de tiros:
     
-    max_lost = -1000 # perdida máxima   # entrando con mil en iro 1265 se pasa de 18 tiros y pierde.
-    max_win = 1000 # ganancia máxima
+    max_lost = -int(input("Pérdida máxima:  "))#-2500 # perdida máxima   # entrando con mil en iro 1265 se pasa de 18 tiros y pierde.
+    print("Ahora la ganancia máxima, si dejas este campo vacío el programa va a correr hasta el infinito. \n Para deternerlo recuerda presionar bien ' CTRL + C '")
+    max_win = int(input("Ganancia máxima:  ")) # ganancia máxima
     
     balance = 0
     perdida = 0
     
     over_18 = 0 # 1700 necesita
     over_20 = 0
-    over_22 = 0
-    over_24 = 0
-    over_26 = 0
-    over_28 = 0
-    over_30 = 0
     
     spin = 0 # n° de tiro
     round = 0 # n° de vuelta sin ganar
-    
-    dozena_apostada = 1 # TODO qui se puede decir que evalue algunos tiros antes y despues elija, como durante el juego 
-    apuesta_dozen= 1 # apuesta inicial
+    print("A continuación selecciona la docena a apostar \n -PRIMERA: 1 \n -SEGUNDA: 2 \n -TERCERA: 3")
+    dozena_apostada = int(input("Docena apostada:  ")) # TODO qui se puede decir que evalue algunos tiros antes y despues elija, como durante el juego 
+    apuesta_dozen= int(input("Apuesta inicial :  $")) # apuesta inicial
     
     
     ## resgistro de dozenas
@@ -93,13 +96,13 @@ def serie_apolo():
     
     # mientras sea el tiro 22 sin ganar y el balance no se pase de perdidas o ganancias
     while balance < max_win and balance > max_lost:
+        spin += 1 
         print()
         result = spinner() # tira la bola
         
-        print(result)
+        print(f"°°° SPIN n° {spin}: {result['value']} {result['color']} °°° ")
         print()
         
-        spin += 1 
         round += 1
         round_color += 1
         
@@ -139,38 +142,32 @@ def serie_apolo():
             red_count +=1
             black_count +=1
             
-        number = 9 
+        number = 7
+        number2 = 8
+        color_over2 = 0
+        first_over_c2 = 0 
         if red_count == number or black_count == number:
             color_over += 1
             if color_over == 1:
                 first_over_c = spin
             
-            round_color = 0
-            print(f'RED: {red_count} | BLACK: {black_count}')
-
-            print(f"ROUND color repeated {color_over}  TIMES")
+            
+        if red_count == number2 or black_count == number2:
+            color_over2 += 1
+            if color_over2 == 1:
+                first_over_c2 = spin
+                
+            
+      
         
-        print("########################")
         
-        
-        
-
-        print(f'# n°: {spin}')
-        print(f'APUESTA: ${apuesta_dozen}')
+        print()
+        print(f'- round: {round}')
+        print(f'- docena apostada: {dozena_apostada}')
+        print(f'- apuesta actual: ${apuesta_dozen}')
 
         print()
-        print(f'COLOR OVER {number} times: {color_over} |RED: {red_count} | BLACK: {black_count}')
 
-        print(f'first over color: {first_over_c}')
-        print(f'DOZENA over 18 times: {over_18}')
-        print(f'first over 18: {first_over_18}')
-
-
-        print(f'dozen over 20  times: {over_20}')
-        print()
-        print(f'round: {round}')
-        print(f'DOCENA APOSTADA: {dozena_apostada}')
-        
         
         
         """if color_apostado == "red" or color_apostado == "black":
@@ -228,7 +225,7 @@ def serie_apolo():
             
             cambio = (apuesta_dozen*2)
             balance += cambio
-            print(f"ganaste! tu balance es de  ${balance}")
+            print(f"ganaste :D ! tu balance es de  ${balance}")
 
 
             apuesta_dozen= 1
@@ -242,12 +239,10 @@ def serie_apolo():
                 dozena_apostada = 2
             elif dozena == third:
                 dozena_apostada = 3
+
+             
                 
-            
-                
-                
-                
-                           
+
         # si pierde
         else:
             print ("perdiste :(")
@@ -262,8 +257,26 @@ def serie_apolo():
             else:
                 apuesta_dozen= (perdida+1)/2   
 
+        if first_over_c != 0 or first_over_18 != 0:
+            print("_________________________________")
             print()
-            
-            print("########################")
-     
+
+        if first_over_c != 0:
+            print(f'- COLOR count')
+            print(f'-- color over {number} times: {color_over} | first at spin n° {first_over_c}')
+        
+        if first_over_c2 != 0:
+            print(f'-- color over {number2} times: {color_over2} | first at spin n° {first_over_c2} ')
+
+        
+        print()
+        if first_over_18 != 0:
+            print('- DOZENA count')
+            print(f'-- dozen over 18 times: {over_18} | first at spin n° {first_over_18}')
+        
+    
+        print()
+        
+        print("################################################################")
+
 serie_apolo()        
